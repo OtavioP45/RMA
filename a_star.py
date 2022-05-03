@@ -13,12 +13,21 @@ from geometry_msgs.msg import PoseArray
 
 import os
 
+import sys
+
 # Main ================================================================================
 def main():
 
     # rospy.init_node('a_star')
     
     # print(rospy.get_param_names())
+
+    argv = sys.argv
+
+    print(len(argv))
+    print(argv)
+
+    assert(len(argv) == 7), "numero invalido de argumentos"
     
     Pontos = list(list())
     
@@ -33,11 +42,11 @@ def main():
     
     Proporcional = 1#0.28                         # Metros/pxl
 
-    xOrigem = 3
-    yOrigem = 3
+    xOrigem = float(argv[1])
+    yOrigem = float(argv[2])
 
-    xDestino = 43
-    yDestino = 30
+    xDestino = float(argv[4])
+    yDestino = float(argv[5])
     
     NomeMapa = 'mapa.pgm'
     Animacao = True
@@ -85,8 +94,8 @@ def main():
     sy = (yOrigem*Proporcional)        # Y inicial
     gx = (xDestino*Proporcional)       # X final
     gy = (yDestino*Proporcional)       # Y final
-    grid_size = 3                  # Distâncias entre as esquinas
-    robot_radius = (1*Proporcional)    # Tamanho do robô
+    grid_size = 0.5                  # Distâncias entre as esquinas
+    robot_radius = (0.8*Proporcional)    # Tamanho do robô
 
     show_animation = Animacao   # Verifica se deve ou não realizar o plot
     if show_animation:          # Plot dos obstáculos, origem e destino
@@ -126,7 +135,11 @@ def main():
     trajetoria = "trajetoria"
     arquivoTrajetoria = open(trajetoria + ".csv", "w")
     for i in range(len(rx)):
-        arquivoTrajetoria.write(str(rx[-i-1]) + ',' + str(ry[-i-1]) + ',3\n')
+        #if i == (len(rx)-1):
+        if True:
+            arquivoTrajetoria.write(str(rx[-i-1]) + ',' + str(ry[-i-1]) + ', ' + str(argv[6]) + '\n')
+        else: 
+            arquivoTrajetoria.write(str(rx[-i-1]) + ',' + str(ry[-i-1]) + ', 3\n')
         #print(str(rx[-i-1]) + ',' + str(ry[-i-1]) + ',3\n')
     arquivoTrajetoria.close()
     
@@ -138,7 +151,11 @@ def main():
         plt.show(block=True)
     #taxa.sleep()
 
-    
+    arquivo_obstaculos = open("obstaculos.csv", "w") 
+    for i in range(len(ox)):
+        arquivo_obstaculos.write(str(ox[i]) + ", " + str(oy[i]) + "\n")
+
+    arquivo_obstaculos.close()
         
         
 # Planejador A*  ====================================================================================
