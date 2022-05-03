@@ -251,9 +251,15 @@ cameraSpawnObjects = "<model name='the_void'>\n\
       <pose frame=''>-1000 -1000 0 0 0 0</pose>\n\
     </model>\n"
 
-userCamera = "<gui>\n\
+userCameraCima = "<gui>\n\
       <camera name=\"camera\">\n\
         <pose>45 25 100 0 1.57 1.57</pose>\n\
+      </camera>\n\
+    </gui>\n"
+
+userCameraFrente = "<gui>\n\
+      <camera name=\"camera\">\n\
+        <pose>8 -15 6 0 0.1 1.57</pose>\n\
       </camera>\n\
     </gui>\n"
 
@@ -374,10 +380,10 @@ def retangulo(vetor, Xinicio, Yinicio):
 
 # o ideal seria fazer algumas restricoes nesse quantidade de blocos 
 # pra evitar q as caixas se sobreponham
-quantidade_blocos = 1        # Quantidade de blocos de fileiras
-quantidade_fileiras = 2       # Quantidade de fileiras por bloco (Y)
-comprimento_fileira = 1       # Comprimento em x*3.32 de cada fileira (X)
-quantidade_prateleiras = 1    # Quantidade de prateleiras (empilhadas) em cada fileira, até 8
+quantidade_blocos = 3        # Quantidade de blocos de fileiras
+quantidade_fileiras = 8       # Quantidade de fileiras por bloco (Y)
+comprimento_fileira = 5       # Comprimento em x*3.32 de cada fileira (X)
+quantidade_prateleiras = 3    # Quantidade de prateleiras (empilhadas) em cada fileira, até 8
 andar2 = True if quantidade_prateleiras > 4 else False  # prateleira em cima de prateleira
 #alturas = [0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5]     # Altura das caixas, da mais baixa até a mais alta, observe que deve haver alturas de acordo com a quantidade de prateleiras configuradas [0.3, 1.6, 2.8]
 #alturas = Alturas(quantidade_prateleiras)          # Função que cria as alturas automaticamente de acordo com a quantidade de prateleiras, a altura inicial e a altura de cada prateleira
@@ -479,7 +485,10 @@ arquivoLaunch.write(launchFim)
 arquivoLaunch.close()
 
 arquivoMundo.write(cameraSpawnObjects)
-arquivoMundo.write(userCamera)
+
+#arquivoMundo.write(userCameraCima)
+arquivoMundo.write(userCameraFrente)
+
 arquivoMundo.write(guiFrameSinc)
 arquivoMundo.write(end)
 arquivoMundo.close()
@@ -543,4 +552,4 @@ for qb in range(nCaixas-1):
   with open(pastaCola + '/model.sdf', 'w') as arquivo:
     arquivo.writelines(linhas)
 
-print('\nPrateleiras criadas com sucesso, divirta-se! Mas se lembre que João Carlos Tonon Campi tá de olho nas suas travessuras...')
+print('\nPrateleiras criadas com sucesso, divirta-se! Mas se lembre que João Carlos Tonon Campi está de olho nas suas travessuras...')
